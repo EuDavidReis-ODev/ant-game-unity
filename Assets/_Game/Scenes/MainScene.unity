@@ -823,6 +823,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtScore: {fileID: 4003877}
+  imageLifes:
+  - {fileID: 1128526866}
+  - {fileID: 583230183}
+  - {fileID: 1711718452}
+  - {fileID: 892880658}
+  - {fileID: 1762121429}
 --- !u!4 &1041870935
 Transform:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     public AudioClip[] audioEnemies;
 
+    public int enemyCount;
     public int totalScore;
     // Start is called before the first frame update
     void Start()
