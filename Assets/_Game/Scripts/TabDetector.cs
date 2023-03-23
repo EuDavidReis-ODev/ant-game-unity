@@ -33,7 +33,10 @@ public class TabDetector : MonoBehaviour
     private void TapObject(RaycastHit2D hit){
         if(hit.collider.gameObject.CompareTag("Enemy") && !tapControl){
             tapControl = true;
-            hit.collider.gameObject.GetComponent<Enemy>().Death();
+            Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
+            enemy.GetComponent<BoxCollider2D>().enabled = false;
+            enemy.PlayAudio(tapControl);
+            enemy.Death();
         }
     }
 }
