@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy : MonoBehaviour
 {   
     private Animator enemyAnimator;
 
     private GameController gameController;
+
+    private UIController uIController;
+
+    public int score;
 
     [SerializeField] private GameObject[] sprites;
     public float speed;
@@ -17,6 +22,7 @@ public class Enemy : MonoBehaviour
         sprites[0] = this.transform.GetChild(0).gameObject;
         sprites[1] = this.transform.GetChild(1).gameObject;
         gameController = FindObjectOfType<GameController>();
+        uIController = FindObjectOfType<UIController>();
     }
 
     // Update is called once per frame
@@ -38,6 +44,8 @@ public class Enemy : MonoBehaviour
         speed = 0f;
         sprites[0].gameObject.SetActive(false);
         sprites[1].gameObject.SetActive(true);
+        gameController.totalScore += score;
+        uIController.UpdateScore(gameController.totalScore);
         Destroy(this.gameObject,Random.Range(2.5f,5f));
     }
 
@@ -48,4 +56,6 @@ public class Enemy : MonoBehaviour
             audioSource.Play();
         }
     }
+
+
 }
