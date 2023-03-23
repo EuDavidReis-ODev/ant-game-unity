@@ -18,6 +18,6 @@ public class Enemy : MonoBehaviour
     }
 
     private void Moviment(){
-        transform.Translate(Vector2.up * (speed * Time.deltaTime));
+        transform.Translate(Vector2.down * (speed * Time.deltaTime));
     }
 }
