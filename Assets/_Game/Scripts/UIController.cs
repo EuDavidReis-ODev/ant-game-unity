@@ -9,7 +9,7 @@ public class UIController : MonoBehaviour
 
     public Image[] imageLifes;
 
-    public GameObject panelGame, panelPause;
+    public GameObject panelGame, panelPause, panelMainMenu;
 
     private GameController gameController;
 
@@ -19,6 +19,9 @@ public class UIController : MonoBehaviour
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
+        panelGame.gameObject.SetActive(false);
+        panelPause.gameObject.SetActive(false);
+        panelMainMenu.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -48,16 +51,33 @@ public class UIController : MonoBehaviour
         panelPause.gameObject.SetActive(false);
         panelGame.gameObject.SetActive(true);
         gameController.Restart(); 
-        foreach (Transform child in allLifes.transform)
-        {
-            child.gameObject.SetActive(true);
-        }   
+        RefillLifes();
     }
 
     public void BackToMainMenu(){
         Time.timeScale = 1f;
         panelPause.gameObject.SetActive(false);
         panelGame.gameObject.SetActive(false);
+        panelMainMenu.gameObject.SetActive(true);
+        gameController.BackToMainMenu();
+        RefillLifes();
+    }
 
+    public void ButtonStart(){
+        panelMainMenu.SetActive(false);
+        panelGame.SetActive(true);
+        gameController.StartGame();
+    }
+
+    public void ButtonExitGame(){
+        AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
+        activity.Call<bool>("moveTaskBack",true);
+    }
+
+    public void RefillLifes(){
+        foreach (Transform child in allLifes.transform)
+        {
+            child.gameObject.SetActive(true);
+        }  
     }
 }
