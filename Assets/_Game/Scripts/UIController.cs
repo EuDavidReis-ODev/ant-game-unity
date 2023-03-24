@@ -9,6 +9,8 @@ public class UIController : MonoBehaviour
 
     public Image[] imageLifes;
 
+    public GameObject panelGame, panelPause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +25,28 @@ public class UIController : MonoBehaviour
 
         public void UpdateScore(int score){
         txtScore.text = score.ToString();
+    }
+
+    public void ButtonPause(){
+        Time.timeScale = 0f;
+        panelGame.gameObject.SetActive(false);
+        panelPause.gameObject.SetActive(true);
+    }
+
+    public void ButtonResume(){
+        Time.timeScale = 1f;
+        panelPause.gameObject.SetActive(false);
+        panelGame.gameObject.SetActive(true);
+    }
+
+    public void ButtonRestart(){
+        
+    }
+
+    public void BackToMainMenu(){
+        Time.timeScale = 1f;
+        panelPause.gameObject.SetActive(false);
+        panelGame.gameObject.SetActive(false);
+
     }
 }
