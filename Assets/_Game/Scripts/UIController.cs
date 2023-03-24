@@ -11,10 +11,14 @@ public class UIController : MonoBehaviour
 
     public GameObject panelGame, panelPause;
 
+    private GameController gameController;
+
+    public GameObject allLifes;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameController = FindObjectOfType<GameController>();
     }
 
     // Update is called once per frame
@@ -40,7 +44,14 @@ public class UIController : MonoBehaviour
     }
 
     public void ButtonRestart(){
-        
+        Time.timeScale = 1f;
+        panelPause.gameObject.SetActive(false);
+        panelGame.gameObject.SetActive(true);
+        gameController.Restart(); 
+        foreach (Transform child in allLifes.transform)
+        {
+            child.gameObject.SetActive(true);
+        }   
     }
 
     public void BackToMainMenu(){
