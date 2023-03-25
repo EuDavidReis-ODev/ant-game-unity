@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 
     public int enemyCount;
     public int totalScore;
+    public int highScore;
     
     private UIController uIController;
 
@@ -18,6 +19,7 @@ public class GameController : MonoBehaviour
     private void Awake() {
         uIController = FindObjectOfType<UIController>();
         spawner = FindObjectOfType<Spawner>();
+        highScore = GetHighScore();
     }
     // Start is called before the first frame update
     void Start()
@@ -29,7 +31,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void Restart(){
@@ -61,5 +62,17 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void SaveScore(){
+        if(totalScore>highScore){
+            highScore = totalScore;
+            PlayerPrefs.SetInt("highscore",highScore);
+            uIController.txtHighScore.text = "Highscore: "+highScore.ToString();
+        }
+    }
+
+    public int GetHighScore(){
+            highScore =  PlayerPrefs.GetInt("highscore",0);
+            return highScore;
+    }
 
 }

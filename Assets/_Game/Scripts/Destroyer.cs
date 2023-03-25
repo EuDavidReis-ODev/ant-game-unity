@@ -18,7 +18,7 @@ public class Destroyer : MonoBehaviour
                 uIController.imageLifes[gameController.enemyCount - 1 ].gameObject.SetActive(false);
             }else{
                 uIController.imageLifes[gameController.enemyCount - 1 ].gameObject.SetActive(false);
-             
+                gameController.SaveScore(); 
             }
             Destroy(otherObject.gameObject);
         }

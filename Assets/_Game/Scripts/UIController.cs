@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public class UIController : MonoBehaviour
 {
-    public TMP_Text txtScore;
+    public TMP_Text txtScore,txtHighScore;
 
     public Image[] imageLifes;
 
@@ -15,13 +15,18 @@ public class UIController : MonoBehaviour
 
     public GameObject allLifes;
 
+    private void Awake() {
+        gameController = FindObjectOfType<GameController>();
+        txtHighScore.text = "Highscore: "+gameController.GetHighScore();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        gameController = FindObjectOfType<GameController>();
         panelGame.gameObject.SetActive(false);
         panelPause.gameObject.SetActive(false);
         panelMainMenu.gameObject.SetActive(true);
+
     }
 
     // Update is called once per frame
