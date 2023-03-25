@@ -11,10 +11,10 @@ public class Enemy : MonoBehaviour
 
     private UIController uIController;
 
-    public int score;
+    [SerializeField] private int score;
 
     [SerializeField] private GameObject[] sprites;
-    public float speed;
+    [SerializeField] private float speed;
     // Start is called before the first frame update
     void Start()
     {

@@ -6,15 +6,16 @@ public class GameController : MonoBehaviour
 {
     public AudioClip[] audioEnemies;
 
-    public int enemyCount;
-    public int totalScore;
-    public int highScore;
+    [HideInInspector] public int enemyCount ,totalScore , highScore;
     
     private UIController uIController;
 
     public Transform allEnemiesParent;
 
     private Spawner spawner;
+
+
+    [SerializeField]private AudioSource music;
     
     private void Awake() {
         uIController = FindObjectOfType<UIController>();
@@ -25,15 +26,13 @@ public class GameController : MonoBehaviour
     void Start()
     {
         totalScore = 0;
-        spawner.gameObject.GetComponent<Spawner>().enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        ActiveDesactiveSpawner(false);
+        music.volume = 0.5f;
     }
 
     public void Restart(){
+        Time.timeScale = 1f;
+        ActiveDesactiveSpawner(true);
         enemyCount = 0;
         totalScore = 0;
         uIController.txtScore.text = totalScore.ToString();
@@ -44,14 +43,17 @@ public class GameController : MonoBehaviour
         totalScore = 0;
         enemyCount = 0;
         uIController.txtScore.text = totalScore.ToString();
-        spawner.gameObject.GetComponent<Spawner>().enabled = true;
+        ActiveDesactiveSpawner(true);
+        music.volume = 0.25f;
     }
 
     public void BackToMainMenu(){
         totalScore = 0;
         enemyCount = 0;
         uIController.txtScore.text = totalScore.ToString();
+        ActiveDesactiveSpawner(false);
         spawner.gameObject.GetComponent<Spawner>().enabled = false;
+        music.volume = 0.5f;
         DestroyAllEnemies();
     }
 
@@ -75,4 +77,28 @@ public class GameController : MonoBehaviour
             return highScore;
     }
 
+    public void DestroyEnemy(Collider2D target){
+            enemyCount++;
+            if(enemyCount < 5){
+                uIController.imageLifes[enemyCount - 1 ].gameObject.SetActive(false);
+            }else{
+                uIController.imageLifes[enemyCount - 1 ].gameObject.SetActive(false);
+                uIController.panelGameOver.gameObject.SetActive(true);
+                SaveScore();
+                DestroyAllEnemies();
+                GameOver(); 
+            }
+            Destroy(target.gameObject);
+    }
+
+    public void GameOver(){
+        Time.timeScale = 0f;
+        ActiveDesactiveSpawner(false);
+        uIController.txtFinalScore.text = "Score: "+totalScore.ToString();
+    }
+
+    public void ActiveDesactiveSpawner(bool active){
+        spawner.gameObject.GetComponent<Spawner>().enabled = active;
+
+    }
 }

@@ -5,11 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 public class UIController : MonoBehaviour
 {
-    public TMP_Text txtScore,txtHighScore;
+    public TMP_Text txtScore,txtHighScore, txtFinalScore;
 
     public Image[] imageLifes;
 
-    public GameObject panelGame, panelPause, panelMainMenu;
+    [SerializeField] private GameObject panelGame, panelPause, panelMainMenu;
+
+    public GameObject panelGameOver;
 
     private GameController gameController;
 
@@ -23,19 +25,11 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        panelGame.gameObject.SetActive(false);
-        panelPause.gameObject.SetActive(false);
-        panelMainMenu.gameObject.SetActive(true);
-
+        Initialize();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-        public void UpdateScore(int score){
+    public void UpdateScore(int score){
         txtScore.text = score.ToString();
     }
 
@@ -56,6 +50,7 @@ public class UIController : MonoBehaviour
         panelPause.gameObject.SetActive(false);
         panelGame.gameObject.SetActive(true);
         gameController.Restart(); 
+        panelGameOver.gameObject.SetActive(false);
         RefillLifes();
     }
 
@@ -63,6 +58,7 @@ public class UIController : MonoBehaviour
         Time.timeScale = 1f;
         panelPause.gameObject.SetActive(false);
         panelGame.gameObject.SetActive(false);
+        panelGameOver.gameObject.SetActive(false);
         panelMainMenu.gameObject.SetActive(true);
         gameController.BackToMainMenu();
         RefillLifes();
@@ -84,5 +80,12 @@ public class UIController : MonoBehaviour
         {
             child.gameObject.SetActive(true);
         }  
+    }
+
+    private void Initialize(){
+        panelGame.gameObject.SetActive(false);
+        panelPause.gameObject.SetActive(false);
+        panelGameOver.gameObject.SetActive(false);
+        panelMainMenu.gameObject.SetActive(true);
     }
 }
